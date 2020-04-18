@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.beauty.mapper.AppointmentMapper">
+  <resultMap id="BaseResultMap" type="com.example.beauty.pojo.Appointment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="beautician_id" jdbcType="BIGINT" property="beauticianId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="deposit_price" jdbcType="DOUBLE" property="depositPrice" />
+    <result column="actual_price" jdbcType="DOUBLE" property="actualPrice" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="customer_satisfaction" jdbcType="VARCHAR" property="customerSatisfaction" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deposit_pay_id" jdbcType="BIGINT" property="depositPayId" />
+    <result column="actual_pay_id" jdbcType="BIGINT" property="actualPayId" />
+  </resultMap>
+</mapper>
