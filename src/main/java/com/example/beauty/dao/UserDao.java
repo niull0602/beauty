@@ -50,4 +50,8 @@ public class UserDao {
     public List<User> selectAll() {
         return userMapper.selectAll();
     }
+
+    public Integer addUsers(List<User> user) {
+        return userMapper.insertList(user);
+    }
 }

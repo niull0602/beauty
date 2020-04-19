@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -49,11 +50,12 @@ public class JsonUtils {
     }
 
     public static void main(String[] args) {
-        HashMap<String,String> msg=new HashMap<>();
-        msg.put("A","B");
-        String objectToJson = JsonUtils.objectToJson(msg);
-        System.out.println(objectToJson);
-        HashMap hashMap = JsonUtils.jsonToPoJo(objectToJson, HashMap.class);
-        System.out.println(hashMap);
+        ArrayList<Long> longs = new ArrayList<>();
+        longs.add(1L);
+        longs.add(2L);
+        longs.add(3L);
+        String s = JsonUtils.objectToJson(longs);
+        System.out.println(s);
+
     }
 }

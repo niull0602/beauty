@@ -2,9 +2,7 @@ package com.example.beauty.service;
 
 import com.example.beauty.request.*;
 import com.example.beauty.response.*;
-import org.elasticsearch.client.IngestClient;
-import org.elasticsearch.client.security.DeleteUserRequest;
-import org.elasticsearch.client.security.DeleteUserResponse;
+
 
 /**
  * Created by NiuLilu on 2020-04-13 16:57.

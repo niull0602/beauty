@@ -14,7 +14,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
-
     @Column(name = "product_name")
     private String productName;
 
