@@ -15,10 +15,89 @@
     <result column="deposit_price" jdbcType="DOUBLE" property="depositPrice" />
     <result column="actual_price" jdbcType="DOUBLE" property="actualPrice" />
     <result column="status" jdbcType="SMALLINT" property="status" />
-    <result column="customer_satisfaction" jdbcType="VARCHAR" property="customerSatisfaction" />
+    <result column="customer_satisfaction" jdbcType="SMALLINT" property="customerSatisfaction" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deposit_pay_id" jdbcType="BIGINT" property="depositPayId" />
     <result column="actual_pay_id" jdbcType="BIGINT" property="actualPayId" />
   </resultMap>
+
+  <resultMap id="SelectUserAppointment" type="com.example.beauty.response.UserAppointmentResponse">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="beautician_id" jdbcType="BIGINT" property="beauticianId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="deposit_price" jdbcType="DOUBLE" property="depositPrice" />
+    <result column="actual_price" jdbcType="DOUBLE" property="actualPrice" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="deposit_pay_id" jdbcType="BIGINT" property="depositPayId" />
+    <result column="actual_pay_id" jdbcType="BIGINT" property="actualPayId" />
+    <association property="item" javaType="com.example.beauty.pojo.Item">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+      <result column="price" jdbcType="DOUBLE" property="price" />
+      <result column="item_img" jdbcType="VARCHAR" property="itemImg" />
+      <result column="main_function" jdbcType="VARCHAR" property="mainFunction" />
+      <result column="target_crowd" jdbcType="VARCHAR" property="targetCrowd" />
+      <result column="type_id" jdbcType="BIGINT" property="typeId" />
+      <result column="saled_number" jdbcType="INTEGER" property="saledNumber" />
+    </association>
+    <association property="beautician" javaType="com.example.beauty.pojo.Beautician">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="age" jdbcType="INTEGER" property="age" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+      <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+      <result column="beautician_desc" jdbcType="VARCHAR" property="beauticianDesc" />
+      <result column="working_time" jdbcType="TIMESTAMP" property="workingTime" />
+      <result column="grader" jdbcType="INTEGER" property="grader" />
+    </association>
+  </resultMap>
+
+  <select id="selectAppointmentByUserId" parameterType="java.lang.Long" resultMap="SelectUserAppointment">
+    SELECT a.*,i.*,b.*
+    FROM t_appointment a INNER JOIN t_item  i ON a.item_id=i.id INNER JOIN t_beautician b ON b.id=a.beautician_id
+    WHERE a.user_id = #{userId}
+  </select>
+
+  <resultMap id="SelectAdminAppointment" type="com.example.beauty.response.AdminSelectAppointmentResponse">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="beautician_id" jdbcType="BIGINT" property="beauticianId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <association property="user" javaType="com.example.beauty.pojo.User">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+      <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="age" jdbcType="INTEGER" property="age" />
+      <result column="address" jdbcType="VARCHAR" property="address" />
+      <result column="job" jdbcType="VARCHAR" property="job" />
+      <result column="exist_money" jdbcType="DOUBLE" property="existMoney" />
+      <result column="consumption" jdbcType="INTEGER" property="consumption" />
+      <result column="mark" jdbcType="SMALLINT" property="mark" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </association>
+  </resultMap>
+  <select id="selectAppointmentByStatus" parameterType="java.lang.Short" resultMap="SelectAdminAppointment">
+    SELECT a.*,i.item_name,u.*
+    FROM t_appointment a INNER JOIN  t_item i ON a.item_id=i.id INNER JOIN t_user u ON a.user_id =u.id
+    WHERE
+    <if test="status != null ">
+      a.status=#{status}
+    </if>
+
+  </select>
 </mapper>

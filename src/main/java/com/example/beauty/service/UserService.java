@@ -27,4 +27,6 @@ public interface UserService {
     Integer updateUser(UpdateUserRequest updateUserRequest);
 
     Integer exits(String phoneNumber);
+
+    SelectUserResopnseList selectAllAdmin(SelectRequest request);
 }

@@ -15,4 +15,64 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="pay_id" jdbcType="BIGINT" property="payId" />
   </resultMap>
+
+  <resultMap id="OrderListMap" type="com.example.beauty.response.SelectOrderResponse">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="pay_id" jdbcType="BIGINT" property="payId" />
+    <association property="product" javaType="com.example.beauty.pojo.Product">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="product_name" jdbcType="VARCHAR" property="productName" />
+      <result column="price" jdbcType="DOUBLE" property="price" />
+      <result column="sale_price" jdbcType="DOUBLE" property="salePrice" />
+      <result column="product_img" jdbcType="VARCHAR" property="productImg" />
+      <result column="product_imgs" jdbcType="VARCHAR" property="productImgs" />
+      <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
+      <result column="exist_number" jdbcType="INTEGER" property="existNumber" />
+      <result column="sale_number" jdbcType="INTEGER" property="saleNumber" />
+      <result column="type_id" jdbcType="BIGINT" property="typeId" />
+    </association>
+  </resultMap>
+  <select id="selectOrdersByUserId" parameterType="java.lang.Long" resultMap="OrderListMap" >
+    SELECT o.num,o.total_price,o.product_id,o.status,p.*
+    FROM t_orders o INNER JOIN t_product p ON o.product_id=p.id
+    WHERE o.user_id=#{userId}
+    GROUP BY o.id DESC
+  </select>
+
+
+  <resultMap id="OrdersAdmin" type="com.example.beauty.response.SelectAdminOrdersResponse">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="pay_id" jdbcType="BIGINT" property="payId" />
+    <association property="user" javaType="com.example.beauty.pojo.User">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+      <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+      <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="age" jdbcType="INTEGER" property="age" />
+      <result column="address" jdbcType="VARCHAR" property="address" />
+      <result column="job" jdbcType="VARCHAR" property="job" />
+      <result column="consumption" jdbcType="INTEGER" property="consumption" />
+    </association>
+  </resultMap>
+  <select id="selectOrdersAdmin" resultMap="OrdersAdmin">
+    SELECT o.* ,p.product_name,u.*
+    FROM t_orders o INNER JOIN t_product p ON o.product_id=p.id INNER JOIN t_user u ON u.id=o.user_id
+
+  </select>
 </mapper>

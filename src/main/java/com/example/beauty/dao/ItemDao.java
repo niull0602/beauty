@@ -37,4 +37,8 @@ public class ItemDao {
         example.createCriteria().andEqualTo("typeId",typeId);
         return itemMapper.selectByExample(example);
     }
+
+    public Item selectItemById(Long itemId) {
+        return itemMapper.selectByPrimaryKey(itemId);
+    }
 }

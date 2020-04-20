@@ -14,4 +14,43 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="status" jdbcType="SMALLINT" property="status" />
   </resultMap>
+
+  <update id="updateList"  parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+      update t_car
+      <set>
+      <if test="status != null">
+        status=#{item.status}
+      </if>
+
+      </set>
+      where id = #{item.id}
+    </foreach>
+  </update>
+
+
+  <resultMap id="userCarListMap" type="com.example.beauty.response.SelectCarResponse">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="numbers" jdbcType="BIGINT" property="numbers" />
+    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+    <association property="product" javaType="com.example.beauty.pojo.Product">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="product_name" jdbcType="VARCHAR" property="productName" />
+      <result column="price" jdbcType="DOUBLE" property="price" />
+      <result column="sale_price" jdbcType="DOUBLE" property="salePrice" />
+      <result column="product_img" jdbcType="VARCHAR" property="productImg" />
+      <result column="product_imgs" jdbcType="VARCHAR" property="productImgs" />
+      <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
+      <result column="exist_number" jdbcType="INTEGER" property="existNumber" />
+      <result column="sale_number" jdbcType="INTEGER" property="saleNumber" />
+      <result column="type_id" jdbcType="BIGINT" property="typeId" />
+    </association>
+  </resultMap>
+  <select id="selectCarByUserId" parameterType="java.lang.Long" resultMap="userCarListMap" >
+    SELECT c.numbers,c.total_price,c.product_id,p.*
+    FROM t_car c INNER JOIN t_product p ON c.product_id=p.id
+    WHERE c.user_id=#{userId} AND c.status=1
+    GROUP BY c.id desc
+  </select>
 </mapper>

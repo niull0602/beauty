@@ -68,7 +68,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer deleteItem(Long itemId) {
+        List<ItemBeauticianShip> list = itemBeauticianShipDao.selectByItemId(itemId);
+        List<Long> IdList = new ArrayList<>();
+        for (ItemBeauticianShip itemBeauticianShip:list){
+            IdList.add(itemBeauticianShip.getId());
+        }
+        itemBeauticianShipDao.deleteByList(IdList);
         return itemDao.deleteItem(itemId);
     }
 
@@ -91,6 +98,8 @@ public class ItemServiceImpl implements ItemService {
         for (Item item:pageInfo.getList()) {
             SelectItemResponse selectItemResponse = new SelectItemResponse();
             BeanUtils.copyProperties(item,selectItemResponse);
+            selectItemResponse.setAppointPrice(item.getPrice()*0.2);
+            selectItemResponse.setActrualPrice(item.getPrice()*0.8);
             String imgsUrl = item.getImgsUrl();
             if (!StringUtil.isNullOrEmpty(imgsUrl)){
                 HashMap hashMap = JsonUtils.jsonToPoJo(imgsUrl, HashMap.class);
@@ -122,6 +131,8 @@ public class ItemServiceImpl implements ItemService {
         for (Item item:pageInfo.getList()) {
             SelectItemResponse selectItemResponse = new SelectItemResponse();
             BeanUtils.copyProperties(item,selectItemResponse);
+            selectItemResponse.setAppointPrice(item.getPrice()*0.2);
+            selectItemResponse.setActrualPrice(item.getPrice()*0.8);
             String imgsUrl = item.getImgsUrl();
             if (!StringUtil.isNullOrEmpty(imgsUrl)){
                 HashMap hashMap = JsonUtils.jsonToPoJo(imgsUrl, HashMap.class);

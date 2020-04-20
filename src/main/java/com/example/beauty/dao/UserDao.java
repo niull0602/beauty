@@ -48,10 +48,20 @@ public class UserDao {
     }
 
     public List<User> selectAll() {
-        return userMapper.selectAll();
+        Example example = new Example(User.class);
+        example.createCriteria()
+                .andEqualTo("mark",0);
+        return userMapper.selectByExample(example);
     }
 
     public Integer addUsers(List<User> user) {
         return userMapper.insertList(user);
+    }
+
+    public List<User> selectAllAdmin() {
+        Example example = new Example(User.class);
+        example.createCriteria()
+                .andEqualTo("mark",1);
+        return userMapper.selectByExample(example);
     }
 }

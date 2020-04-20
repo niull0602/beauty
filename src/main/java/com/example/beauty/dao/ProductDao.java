@@ -37,4 +37,8 @@ public class ProductDao {
         example.createCriteria().andEqualTo("typeId",typeId);
         return productMapper.selectByExample(example);
     }
+
+    public Product selectProductById(Long productId) {
+        return productMapper.selectByPrimaryKey(productId);
+    }
 }

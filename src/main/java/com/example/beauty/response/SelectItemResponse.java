@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 public class SelectItemResponse {
 
-
     private Long id;
 
     private String itemName;
@@ -31,4 +30,8 @@ public class SelectItemResponse {
     private Long typeId;
 
     private Integer saledNumber;
+
+    private Double appointPrice;
+
+    private Double actrualPrice;
 }

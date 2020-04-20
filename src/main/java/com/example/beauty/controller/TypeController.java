@@ -21,12 +21,12 @@ public class TypeController {
         return SzpJsonResult.ok(typeService.getType());
     }
 
-    @GetMapping(value = "get/item/type")
+    @GetMapping(value = "get/item/type/{id}")
     public SzpJsonResult<TypeResponse> getItemType(@PathVariable(value = "id")Long id){
         return SzpJsonResult.ok(typeService.getItemType(id));
     }
 
-    @GetMapping(value = "get/product/type")
+    @GetMapping(value = "get/product/type/{id}")
     public SzpJsonResult<TypeResponse> getProductType(@PathVariable(value = "id")Long id){
         return SzpJsonResult.ok(typeService.getProductType(id));
     }

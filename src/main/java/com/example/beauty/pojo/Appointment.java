@@ -53,7 +53,7 @@ public class Appointment {
      * 客户满意度
      */
     @Column(name = "customer_satisfaction")
-    private String customerSatisfaction;
+    private Short customerSatisfaction;
 
     @Column(name = "create_time")
     private Date createTime;

@@ -33,7 +33,4 @@ public class UpdateUserRequest {
      */
     private Integer consumption;
 
-
-    private Date updateTime;
-
 }

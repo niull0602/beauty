@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
         log.info("该用户-{},token-{}",user.toString(),token);
         //将token留在redis中
         stringRedisTemplate.opsForValue().set(token, JsonUtils.objectToJson(user));
-        response.setMsg(token);
+        response.setToken(token);
         //生成token，放入redis，返还前端
         return response;
     }
@@ -159,6 +159,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer exits(String phoneNumber) {
         return userDao.findUserByPhone(phoneNumber).size();
+    }
+
+    @Override
+    public SelectUserResopnseList selectAllAdmin(SelectRequest request) {
+        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
+        List<User> userList = userDao.selectAllAdmin();
+        PageInfo<User> userPageInfo = new PageInfo<>(userList);
+        List<User> list = userPageInfo.getList();
+        SelectUserResopnseList selectUserResopnseList = new SelectUserResopnseList();
+        selectUserResopnseList.setList(userList);
+        selectUserResopnseList.setTotal(userPageInfo.getTotal());
+        return selectUserResopnseList;
     }
 
     private Boolean checkPhoneAndCode(String code,String phoneNumber){

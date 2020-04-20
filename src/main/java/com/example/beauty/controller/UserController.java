@@ -6,8 +6,10 @@ import com.example.beauty.response.LoginResponse;
 import com.example.beauty.response.SelectUserResopnseList;
 import com.example.beauty.response.SelectUserResponse;
 import com.example.beauty.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Created by NiuLilu on 2020-04-13 16:55.
@@ -46,10 +48,15 @@ public class UserController {
     public SzpJsonResult<SelectUserResponse> selectUserById(@PathVariable(value = "id")Long id){
         return SzpJsonResult.ok(userService.findUserById(id));
     }
-
+    @ApiOperation("select/all/user")
     @PostMapping(value = "select/all/user")
     public SzpJsonResult<SelectUserResopnseList> selectAllUser(@RequestBody SelectRequest request){
         return SzpJsonResult.ok(userService.selectAll(request));
+    }
+
+    @PostMapping(value = "select/all/admin")
+    public SzpJsonResult<SelectUserResopnseList> selectAllAdmin(@RequestBody SelectRequest request){
+        return SzpJsonResult.ok(userService.selectAllAdmin(request));
     }
 
     @GetMapping(value = "exits/user")
@@ -66,4 +73,5 @@ public class UserController {
     public SzpJsonResult<String> sendCode(@RequestParam(value = "phoneNumber")String phoneNumber){
         return SzpJsonResult.ok(userService.saveCode(phoneNumber));
     }
+
 }

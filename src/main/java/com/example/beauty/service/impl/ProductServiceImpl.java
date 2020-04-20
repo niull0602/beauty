@@ -30,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
     public Integer addProduct(AddProductRequest addProductRequest) {
         Product product = new Product();
         product.setCreateTime(new Date());
+        product.setUpdateTime(new Date());
         BeanUtils.copyProperties(addProductRequest,product);
         return productDao.addProduct(product);
     }
